@@ -19,13 +19,13 @@ impl Database {
         Ok(Self { pool })
     }
 
-    pub async fn insert_post(&self, title: &str, body: &str) -> anyhow::Result<()> {
+    pub async fn insert_enron_email(&self, title: &str, body: &str) -> anyhow::Result<()> {
         let mut conn = self.pool.acquire().await?;
 
         sqlx::query!(
             r#"
-            INSERT INTO posts
-                (title, body)
+            INSERT INTO enron_emails
+                (file, message)
             VALUES (?1, ?2)
             "#,
             title,
@@ -37,7 +37,7 @@ impl Database {
         Ok(())
     }
 
-    pub async fn search_posts(
+    pub async fn search_enron_emails(
         &self,
         query: &str,
     ) -> anyhow::Result<Vec<(Option<String>, Option<String>)>> {
@@ -46,10 +46,10 @@ impl Database {
         let rows = sqlx::query!(
             r#"
             SELECT
-                highlight(posts,0, '<b>', '</b>') title, 
-                highlight(posts,1, '<b>', '</b>') body
-            FROM posts 
-            WHERE posts MATCH ?1
+                highlight(enron_emails,0, '<b>', '</b>') file, 
+                highlight(enron_emails,1, '<b>', '</b>') message
+            FROM enron_emails 
+            WHERE enron_emails MATCH ?1
             ORDER BY rank
             LIMIT 10
             "#,
@@ -58,7 +58,7 @@ impl Database {
         .fetch_all(&mut *conn)
         .await?
         .into_iter()
-        .map(|r| (r.title, r.body))
+        .map(|r| (r.file, r.message))
         .collect();
 
         Ok(rows)

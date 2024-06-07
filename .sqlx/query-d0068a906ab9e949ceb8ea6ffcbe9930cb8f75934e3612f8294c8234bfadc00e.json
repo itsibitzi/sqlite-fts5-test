@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO enron_emails\n                (file, message)\n            VALUES (?1, ?2)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "d0068a906ab9e949ceb8ea6ffcbe9930cb8f75934e3612f8294c8234bfadc00e"
+}

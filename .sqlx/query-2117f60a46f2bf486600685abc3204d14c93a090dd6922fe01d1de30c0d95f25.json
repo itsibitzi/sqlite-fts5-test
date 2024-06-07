@@ -1,0 +1,26 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT\n                highlight(enron_emails,0, '<b>', '</b>') file, \n                highlight(enron_emails,1, '<b>', '</b>') message\n            FROM enron_emails \n            WHERE enron_emails MATCH ?1\n            ORDER BY rank\n            LIMIT 10\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "file",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "message",
+        "ordinal": 1,
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      null,
+      null
+    ]
+  },
+  "hash": "2117f60a46f2bf486600685abc3204d14c93a090dd6922fe01d1de30c0d95f25"
+}

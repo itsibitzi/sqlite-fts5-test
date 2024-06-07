@@ -15,14 +15,14 @@ async fn main() -> anyhow::Result<()> {
     match cli.command {
         Commands::LoadCsv => enron_row::read_enron_csv(&database).await?,
         Commands::Search { query } => {
-            let posts = database.search_posts(&query).await?;
-            for post in posts {
+            let emails = database.search_enron_emails(&query).await?;
+            for email in emails {
                 println!("FILE");
                 println!("-------------");
-                println!("{}", post.0.unwrap_or_else(|| "<NULL>".to_string()));
+                println!("{}", email.0.unwrap_or_else(|| "<NULL>".to_string()));
                 println!("BODY");
                 println!("-------------");
-                println!("{}", post.1.unwrap_or_else(|| "<NULL>".to_string()));
+                println!("{}", email.1.unwrap_or_else(|| "<NULL>".to_string()));
                 println!("=============");
             }
         }

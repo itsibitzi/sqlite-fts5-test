@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex;
 
-SCRIPT_PATH=$( cd $(dirname $0) ; pwd -P )
+SCRIPT_PATH=$( cd "$(dirname $0)" ; pwd -P )
 
 DB_PATH="${SCRIPT_PATH}/../temp.db"
 
@@ -22,7 +22,6 @@ pushd "${SCRIPT_PATH}/.."
     export DATABASE_URL="sqlite://${DB_PATH}" 
     
     cargo sqlx migrate run
-    echo "INSERT INTO posts (title, body) VALUES ('foo', 'bar');" | sqlite3 "${DB_PATH}"
     cargo sqlx prepare 
 
     rm "$DB_PATH"

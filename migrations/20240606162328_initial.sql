@@ -1,1 +1,1 @@
-CREATE VIRTUAL TABLE posts USING FTS5(title, body);
+CREATE VIRTUAL TABLE enron_emails USING FTS5(file, message);

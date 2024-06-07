@@ -15,7 +15,9 @@ pub async fn read_enron_csv(database: &Database) -> anyhow::Result<()> {
         let record: EnronRow = result?;
 
         // Very inefficient - opens a transaction per row
-        database.insert_post(&record.file, &record.message).await?;
+        database
+            .insert_enron_email(&record.file, &record.message)
+            .await?;
     }
 
     Ok(())
